@@ -1,10 +1,10 @@
-***REMOVED***
+# coding=utf-8
 from telegram.ext import Updater, InlineQueryHandler, \
     MessageHandler, CommandHandler
 from telegram.ext.filters import Filters
 import requests
 import re
-***REMOVED***
+from utils import *
 
 import logging
 
@@ -43,11 +43,11 @@ def bop(bot, update):
 
     try:
         subs = get_subscribers_list(channel_name)
-***REMOVED***
+        try:
             add_tracking_channel(chat_id, channel_name)
             success = "Your channel was accepted!"
             bot.send_message(chat_id=chat_id, text=success)
-***REMOVED***
+        except Exception:
             channel_exist = "Are you sure you didn't add this channel before?"
             bot.send_message(chat_id=chat_id, text=channel_exist)
     except Exception:
@@ -57,7 +57,7 @@ def bop(bot, update):
         bot.send_message(chat_id=chat_id, text=admin_right)
 
 
-***REMOVED***
+def main():
     updater = Updater(get_token())
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', start))
@@ -66,5 +66,5 @@ def bop(bot, update):
     updater.idle()
 
 
-***REMOVED***
-***REMOVED***
+if __name__ == '__main__':
+    main()
