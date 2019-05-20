@@ -1,0 +1,5 @@
+pyrogram
+python-telegram-bot
+celery
+requests
+mysql-connector
