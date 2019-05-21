@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: aidarbek/app:v1
+    image: aidarbek/app:latest
     build: .
     command: app
     volumes:
@@ -9,10 +9,8 @@ services:
     environment:
       PYTHONUNBUFFERED: 0
       PYTHONIOENCODING: utf-8
-      REDASH_LOG_LEVEL: "INFO"
-      REDASH_REDIS_URL: "redis://redis:6379/0"
-      REDASH_DATABASE_URL: "postgresql://postgres@postgres/postgres"
-      REDASH_RATELIMIT_ENABLED: "false"
+      LANG: "en_US.UTF-8"
+      LC_ALL: "en_US.UTF-8"
   bot:
     image: aidarbek/bot:v1
     build: .
@@ -22,11 +20,8 @@ services:
     environment:
       PYTHONUNBUFFERED: 0
       PYTHONIOENCODING: utf-8
-      REDASH_LOG_LEVEL: "INFO"
-      REDASH_REDIS_URL: "redis://redis:6379/0"
-      REDASH_DATABASE_URL: "postgresql://postgres@postgres/postgres"
-      QUEUES: "queries,scheduled_queries,celery,schemas"
-      WORKERS_COUNT: 2
+      LANG: "en_US.UTF-8"
+      LC_ALL: "en_US.UTF-8"
   db:
     image: mysql:5.7
     ports:
