@@ -39,14 +39,14 @@ def main():
                         if not member_in(member, prev):
                             sub_message = "[@{}] {} subscribed"\
                                 .format(target, member)
-                            print(sub_message)
+                            #print(sub_message)
                             add_sub(member, target)
                             app.send_message(owner_name, sub_message)
                     for member in prev:
                         if not member_in(member, new):
-                            unsub_message = "[{}] {} unsubscribed"\
+                            unsub_message = "[@{}] {} unsubscribed"\
                                 .format(target, member)
-                            print(unsub_message)
+                            #print(unsub_message)
                             delete_sub(member, target)
                             app.send_message(owner_name, unsub_message)
             time.sleep(5)
