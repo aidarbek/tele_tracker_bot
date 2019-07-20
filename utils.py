@@ -46,9 +46,9 @@ def get_subs(target):
         config = get_db_config()
         connection = mysql.connector.connect(**config)
         cursor = connection.cursor()
-        cursor.execute("SELECT name FROM subs WHERE bot='{}'".format(target))
+        cursor.execute("SELECT id, name FROM subs WHERE bot='{}'".format(target))
         results = []
-        results = [name[0] for name in cursor]
+        results = [(row[0], row[1]) for row in cursor]
         cursor.close()
         connection.close()
         return results
@@ -56,24 +56,23 @@ def get_subs(target):
         return []
 
 
-def add_sub(name, target):
+def add_sub(name, target, uuid):
     config = get_db_config()
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    sql = "INSERT INTO subs (name, bot) VALUES ('{}', '{}')"\
-        .format(name, target)
-    result = cursor.execute(sql)
+    sql = "INSERT INTO subs (name, bot, id) VALUES (%s,%s,%s)"
+    result = cursor.execute(sql, (name, target, uuid))
     connection.commit()
     cursor.close()
     connection.close()
 
 
-def delete_sub(name, target):
+def delete_sub(uuid, target):
     config = get_db_config()
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    sql = "DELETE FROM subs WHERE name='{}' and bot='{}'".format(name, target)
-    result = cursor.execute(sql)
+    sql = "DELETE FROM subs WHERE id=%s and bot=%s"
+    result = cursor.execute(sql, (uuid, target))
     connection.commit()
     cursor.close()
     connection.close()
@@ -105,11 +104,12 @@ def name(member):
         res += "("+member.username+")"
     return res
 
-
-def get_subscribers_list(target):
-    with app:
-        new = []
-        for member in app.iter_chat_members(target):
-            new.append(name(member.user))
-        return new
-    raise Exception("Something went wrong")
+def get_all_subscribers_list(target):
+    bot = TelegramClient('bot', get_api_id(), get_api_hash()).start(bot_token=get_token())
+    with bot:
+        bot.connect()
+        res = []
+        all_participants = bot.get_participants(target, aggressive=True)
+        for user in all_participants:
+            res.append((user.id, name(user)))
+        return res

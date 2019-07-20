@@ -3,3 +3,4 @@ python-telegram-bot
 celery
 requests
 mysql-connector
+telethon

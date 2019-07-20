@@ -47,11 +47,12 @@ def bop(bot, update):
             add_tracking_channel(chat_id, channel_name)
             success = "Your channel was accepted!"
             bot.send_message(chat_id=chat_id, text=success)
-        except Exception:
+        except Exception as err:
+            print(err)
             channel_exist = "Are you sure you didn't add this channel before?"
             bot.send_message(chat_id=chat_id, text=channel_exist)
     except Exception:
-    	admin_right = """Something went wrong. \
+        admin_right = """Something went wrong. \
             Are you sure bot was added as an admin \
             and you gave me the right name of the channel?"""
         bot.send_message(chat_id=chat_id, text=admin_right)

@@ -8,8 +8,10 @@ CREATE TABLE tracker (
 
 CREATE TABLE subs (
   bot VARCHAR(100),
-  name VARCHAR(100)
+  name VARCHAR(100),
+  id INT
 );
+INSERT INTO tracker (owner, bot) VALUES (82132144, 'catputer');
 #SET NAMES utf8;
 #ALTER DATABASE tracker CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 #ALTER TABLE subs CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
